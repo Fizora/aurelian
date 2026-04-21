@@ -67,7 +67,7 @@ const Navbar = () => {
   return (
     <>
       <header className="w-full fixed left-0 top-0 z-50 bg-white text-black shadow-sm p-4">
-        <div className="mx-auto container px-4 flex items-center justify-between">
+        <div className="mx-auto containe flex items-center justify-between">
           {/* Logo */}
           <div className="font-mono text-2xl font-black">
             <Link href="/">Aurelian.</Link>
