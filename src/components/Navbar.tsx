@@ -16,9 +16,9 @@ interface SearchProduct {
   badge?: string;
 }
 
-// Placeholder gambar dummy (base64 SVG) - tidak perlu file eksternal
+// Placeholder with Aurelian branding
 const DUMMY_IMAGE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='16'%3ENo Image%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='16'%3EAURELIAN%3C/text%3E%3C/svg%3E";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,9 +36,7 @@ const Navbar = () => {
   const menuItems = [
     { name: "Home", href: "/" },
     { name: "Shop", href: "/shop" },
-    { name: "Collections", href: "/collections" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Location", href: "/location" },
   ];
 
   const popularTerms = [
@@ -53,12 +51,11 @@ const Navbar = () => {
   const priceRange = "Rp500.000 - Rp1.500.000";
   const colorOptions = ["Black", "White", "Gray", "Beige", "Olive"];
 
-  // Gunakan DUMMY_IMAGE untuk semua produk
   const trendingProducts: SearchProduct[] = [
     {
       id: 1,
       name: "Oversized Drop Shoulder Tee",
-      brand: "VELORA",
+      brand: "AURELIAN",
       price: "Rp499.000",
       image: DUMMY_IMAGE,
       badge: "Best Seller",
@@ -66,7 +63,7 @@ const Navbar = () => {
     {
       id: 2,
       name: "Technical Cargo Pants",
-      brand: "VELORA",
+      brand: "AURELIAN",
       price: "Rp899.000",
       image: DUMMY_IMAGE,
       badge: "New",
@@ -74,7 +71,7 @@ const Navbar = () => {
     {
       id: 3,
       name: "Cropped Knit Sweater",
-      brand: "VELORA",
+      brand: "AURELIAN",
       price: "Rp699.000",
       image: DUMMY_IMAGE,
       badge: "Limited",
@@ -151,7 +148,7 @@ const Navbar = () => {
       <header className="w-full fixed left-0 top-0 z-50 bg-white/90 backdrop-blur-md text-black shadow-sm">
         <div className="mx-auto container flex items-center justify-between p-4">
           <div className="font-mono text-2xl font-black tracking-tighter">
-            <Link href="/">VELORA.</Link>
+            <Link href="/">AURELIAN.</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
@@ -175,7 +172,7 @@ const Navbar = () => {
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Search..."
+                placeholder="Search Aurelian..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={handleSearchOpen}
@@ -339,6 +336,7 @@ const Navbar = () => {
                   <button
                     onClick={handleSearchClose}
                     className="p-2 hover:bg-gray-100 rounded-full transition"
+                    aria-label="Close search"
                   >
                     <LuX size={24} />
                   </button>
@@ -396,6 +394,7 @@ const Navbar = () => {
                             className="w-8 h-8 rounded-full border border-gray-300 shadow-sm"
                             style={{ backgroundColor: color.toLowerCase() }}
                             title={color}
+                            aria-label={`Color ${color}`}
                           />
                         ))}
                       </div>

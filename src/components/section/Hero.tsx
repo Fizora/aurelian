@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 interface Slide {
   id: number;
@@ -15,8 +16,7 @@ interface Slide {
 const slidesData: Slide[] = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    image: "/images/img-1.jpg",
     title: "Fall/Winter Capsule",
     description:
       "Discover the new collection — refined minimalism for the urban nomad. Limited pieces available.",
@@ -26,9 +26,8 @@ const slidesData: Slide[] = [
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80",
-    title: "VELORA x STUDIO KURA",
+    image: "/images/img-2.jpg",
+    title: "AURELIAN x STUDIO KURA",
     description:
       "An exclusive collaboration celebrating artisanal craftsmanship. Each piece is numbered.",
     ctaText: "Explore Collab",
@@ -37,8 +36,7 @@ const slidesData: Slide[] = [
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    image: "/images/img-3.jpg",
     title: "Tech-Forward Streetwear",
     description:
       "Innovative fabrics with smart features. Pre-order now for early access.",
@@ -48,7 +46,7 @@ const slidesData: Slide[] = [
   },
 ];
 
-export default function Hero() {
+const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -98,10 +96,13 @@ export default function Hero() {
         {slidesData.map((slide) => (
           <div key={slide.id} className="relative w-full shrink-0 min-h-screen">
             <div className="absolute inset-0">
-              <img
+              <Image
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-full object-cover"
+                fill
+                priority={slide.id === 1}
+                className="object-cover"
+                sizes="100vw"
               />
               <div className="absolute inset-0 bg-black/30" />
             </div>
@@ -204,4 +205,6 @@ export default function Hero() {
       </div>
     </div>
   );
-}
+};
+
+export default Hero;
