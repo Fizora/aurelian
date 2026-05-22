@@ -209,7 +209,7 @@ const Navbar = () => {
 
             {/* Sign In button - high contrast */}
             <Link
-              href="/signin"
+              href="/auth/login"
               className="hidden sm:block bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm font-medium shadow-sm"
             >
               Sign In
@@ -294,7 +294,7 @@ const Navbar = () => {
                   className="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row gap-4 text-gray-600"
                 >
                   <Link
-                    href="/signin"
+                    href="/auth/login"
                     onClick={handleMenuToggle}
                     className="hover:text-black transition"
                   >

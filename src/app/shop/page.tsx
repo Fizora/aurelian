@@ -6,11 +6,9 @@ import Link from "next/link";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { LuFilter, LuX, LuArrowUpDown } from "react-icons/lu";
 
-// Dummy image placeholder
 const DUMMY_IMAGE =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'%3E%3Crect width='400' height='500' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='20'%3EAURELIAN%3C/text%3E%3C/svg%3E";
 
-// Product type
 interface Product {
   id: number;
   name: string;
@@ -25,7 +23,6 @@ interface Product {
   color: string;
 }
 
-// Full product catalog (unchanged)
 const allProducts: Product[] = [
   {
     id: 1,
@@ -33,7 +30,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 1299000,
     originalPrice: 1899000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/oversized-blazer.jpg",
     badge: "Best Seller",
     rating: 4.8,
     reviews: 234,
@@ -46,7 +43,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 899000,
     originalPrice: 1299000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/pleated-wide.jpg",
     badge: "Limited",
     rating: 4.7,
     reviews: 189,
@@ -59,7 +56,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 599000,
     originalPrice: 799000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/cropped-knit.jpg",
     badge: "New",
     rating: 4.9,
     reviews: 56,
@@ -72,7 +69,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 1499000,
     originalPrice: 2199000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/leather-loafershoes.jpg",
     badge: "Trending",
     rating: 4.6,
     reviews: 412,
@@ -85,7 +82,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 2199000,
     originalPrice: 3199000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/technical-cargo-jacket.jpg",
     badge: "Editors' Pick",
     rating: 4.9,
     reviews: 98,
@@ -98,7 +95,7 @@ const allProducts: Product[] = [
     brand: "AURELIAN",
     price: 349000,
     originalPrice: 499000,
-    image: DUMMY_IMAGE,
+    image: "/images/showcase/silk-blend-scarf.jpg",
     badge: "Accessory",
     rating: 4.5,
     reviews: 73,
@@ -185,11 +182,9 @@ const allProducts: Product[] = [
   },
 ];
 
-// Unique categories and colors for filters
 const categories = ["All", ...new Set(allProducts.map((p) => p.category))];
 const colors = ["All", ...new Set(allProducts.map((p) => p.color))];
 
-// Star rating component
 const StarRating = ({ rating }: { rating: number }) => {
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
@@ -206,7 +201,6 @@ const StarRating = ({ rating }: { rating: number }) => {
   );
 };
 
-// Product card component – darkened text colors
 const ProductCard = ({ product }: { product: Product }) => {
   const discount = product.originalPrice
     ? Math.round((1 - product.price / product.originalPrice) * 100)
@@ -216,12 +210,12 @@ const ProductCard = ({ product }: { product: Product }) => {
     <div className="group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
       <div className="relative bg-gray-100 rounded-2xl overflow-hidden aspect-3/4">
         {product.badge && (
-          <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-xs font-bold px-2.5 py-1 rounded-full">
+          <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-xs font-bold px-2.5 py-1 rounded-full text-gray-900 shadow-sm">
             {product.badge}
           </div>
         )}
         {discount > 0 && (
-          <div className="absolute top-3 right-3 z-10 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+          <div className="absolute top-3 right-3 z-10 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
             -{discount}%
           </div>
         )}
@@ -239,18 +233,13 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </div>
       <div className="mt-4 text-left">
-        <p className="text-sm font-mono text-gray-700">{product.brand}</p>{" "}
-        {/* was gray-500 */}
+        <p className="text-sm font-mono text-gray-700">{product.brand}</p>
         <h3 className="font-semibold text-lg font-serif text-gray-900">
           {product.name}
-        </h3>{" "}
-        {/* explicit black */}
+        </h3>
         <div className="flex items-center gap-2 mt-1">
           <StarRating rating={product.rating} />
-          <span className="text-xs text-gray-600">
-            ({product.reviews})
-          </span>{" "}
-          {/* was gray-400 */}
+          <span className="text-xs text-gray-600">({product.reviews})</span>
         </div>
         <div className="flex items-center gap-2 mt-1">
           <p className="font-bold text-black">
@@ -258,8 +247,6 @@ const ProductCard = ({ product }: { product: Product }) => {
           </p>
           {product.originalPrice && (
             <p className="text-sm text-gray-500 line-through">
-              {" "}
-              {/* was gray-400 */}
               Rp{product.originalPrice.toLocaleString("id-ID")}
             </p>
           )}
@@ -302,8 +289,12 @@ export default function Shop() {
       }}
     >
       <div className="flex justify-between items-center p-4 border-b">
-        <h2 className="text-xl font-serif font-bold">Filters</h2>
-        <button onClick={() => setIsFilterDrawerOpen(false)} className="p-2">
+        <h2 className="text-xl font-serif font-bold text-gray-900">Filters</h2>
+        <button
+          onClick={() => setIsFilterDrawerOpen(false)}
+          className="p-2 text-gray-900 hover:bg-gray-100 rounded-full transition"
+          aria-label="Close filters"
+        >
           <LuX size={24} />
         </button>
       </div>
@@ -323,19 +314,16 @@ export default function Shop() {
         <div>
           <h3 className="text-sm font-semibold text-gray-800 mb-3">
             Price Range
-          </h3>{" "}
-          {/* darker */}
+          </h3>
           <input
             type="range"
             min={0}
             max={maxPrice}
             value={priceRange[1]}
             onChange={(e) => setPriceRange([0, Number(e.target.value)])}
-            className="w-full"
+            className="w-full accent-black"
           />
-          <div className="flex justify-between text-sm text-gray-700 mt-2">
-            {" "}
-            {/* darker */}
+          <div className="flex justify-between text-sm text-gray-800 mt-2">
             <span>Rp0</span>
             <span>Rp{priceRange[1].toLocaleString("id-ID")}</span>
           </div>
@@ -356,23 +344,19 @@ export default function Shop() {
     <>
       <main className="bg-white pt-28 pb-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Page header – darkened description */}
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl text-black font-serif font-bold">
               Shop All
             </h1>
             <p className="text-gray-700 mt-2">
-              {" "}
-              {/* was gray-500 */}
               Discover our latest arrivals and timeless essentials
             </p>
           </div>
 
-          {/* Mobile filter button & sort */}
           <div className="flex justify-between items-center mb-6 lg:hidden">
             <button
               onClick={() => setIsFilterDrawerOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm font-medium text-gray-800"
             >
               <LuFilter size={16} /> Filters
             </button>
@@ -380,7 +364,6 @@ export default function Shop() {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Desktop sidebar filters – darkened labels */}
             <aside className="hidden lg:block w-64 shrink-0">
               <div className="sticky top-24 space-y-8">
                 <FilterSection
@@ -396,9 +379,7 @@ export default function Shop() {
                   onChange={setSelectedColor}
                 />
                 <div>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-700 mb-4">
-                    {" "}
-                    {/* was gray-500 */}
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-800 mb-4">
                     Price Range
                   </h3>
                   <input
@@ -409,7 +390,7 @@ export default function Shop() {
                     onChange={(e) => setPriceRange([0, Number(e.target.value)])}
                     className="w-full accent-black"
                   />
-                  <div className="flex justify-between text-sm text-gray-700 mt-2">
+                  <div className="flex justify-between text-sm text-gray-800 mt-2">
                     <span>Rp0</span>
                     <span>Rp{priceRange[1].toLocaleString("id-ID")}</span>
                   </div>
@@ -417,20 +398,17 @@ export default function Shop() {
               </div>
             </aside>
 
-            {/* Product grid */}
             <div className="flex-1">
-              {/* Desktop sort bar – darkened product count */}
               <div className="hidden lg:flex justify-between items-center mb-6">
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-800">
                   {filtered.length} products
-                </p>{" "}
-                {/* was gray-500 */}
+                </p>
                 <SortSelect sortBy={sortBy} setSortBy={setSortBy} />
               </div>
 
               {filtered.length === 0 ? (
                 <div className="text-center py-20">
-                  <p className="text-gray-600">
+                  <p className="text-gray-700">
                     No products match your filters.
                   </p>
                   <button
@@ -460,7 +438,6 @@ export default function Shop() {
   );
 }
 
-// Filter section component – darkened label text
 const FilterSection = ({
   title,
   options,
@@ -473,9 +450,7 @@ const FilterSection = ({
   onChange: (val: string) => void;
 }) => (
   <div>
-    <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-700 mb-4">
-      {" "}
-      {/* was gray-500 */}
+    <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-800 mb-4">
       {title}
     </h3>
     <div className="space-y-2">
@@ -494,11 +469,9 @@ const FilterSection = ({
           />
           <span
             className={
-              value === opt ? "font-medium text-gray-900" : "text-gray-700"
+              value === opt ? "font-medium text-gray-900" : "text-gray-800"
             }
           >
-            {" "}
-            {/* was text-gray-600 */}
             {opt}
           </span>
         </label>
@@ -507,7 +480,6 @@ const FilterSection = ({
   </div>
 );
 
-// Sort dropdown – unchanged but ensure text is dark enough (already default)
 const SortSelect = ({
   sortBy,
   setSortBy,
@@ -527,7 +499,7 @@ const SortSelect = ({
       <option value="rating">Best Rating</option>
     </select>
     <LuArrowUpDown
-      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none"
       size={14}
     />
   </div>
