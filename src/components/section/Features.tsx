@@ -144,7 +144,7 @@ const Features = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         {/* Global Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <span className="text-sm font-mono uppercase tracking-wider text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
+          <span className="text-sm font-mono uppercase tracking-wider text-gray-500 bg-gray-100 px-4 py-1.5 rounded-full">
             Why Aurelian
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mt-6 tracking-tight">
@@ -153,7 +153,7 @@ const Features = () => {
               new standard
             </span>
           </h2>
-          <p className="text-gray-600 text-lg mt-4 max-w-xl mx-auto">
+          <p className="text-gray-600 text-lg mt-4 max-w-xl mx-auto leading-relaxed">
             Premium streetwear built on radical transparency, ethical
             craftsmanship, and a seamless shopping experience.
           </p>
@@ -170,15 +170,15 @@ const Features = () => {
           </p>
         </div>
 
-        {/* Card Grid – improved spacing and consistent height */}
+        {/* Card Grid – improved design with border, better hover */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="bg-gray-50 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group relative overflow-hidden text-center flex flex-col h-full"
+              className="bg-white rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group relative overflow-hidden text-center flex flex-col h-full border border-gray-100"
             >
               <div className="absolute top-0 right-0 w-20 h-20 bg-black/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition duration-500" />
-              <div className="w-14 h-14 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 bg-black text-white rounded-xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform shadow-md">
                 <feature.icon size={28} />
               </div>
               <h3 className="text-xl font-serif font-bold mb-1">
@@ -200,7 +200,7 @@ const Features = () => {
           ))}
         </div>
 
-        {/* Trust Badges – with better spacing and subtle separator */}
+        {/* Trust Badges – subtle separator and brand icons */}
         <div className="relative text-center mb-32">
           <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gray-200 to-transparent" />
           <div className="pt-16">
@@ -222,11 +222,11 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Trending Products Section – improved grid and image consistency */}
+        {/* Trending Products Section – improved card shadows and image rounding */}
         <div className="mb-32">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
             <div>
-              <span className="text-sm font-mono uppercase tracking-wider text-gray-400">
+              <span className="text-sm font-mono uppercase tracking-wider text-gray-500">
                 Trending now
               </span>
               <h3 className="text-3xl md:text-4xl font-serif font-bold mt-1">
@@ -235,7 +235,7 @@ const Features = () => {
             </div>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 font-medium"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-full hover:bg-black hover:text-white hover:border-black transition-all duration-300 font-medium shadow-sm"
             >
               View all <span aria-hidden="true">→</span>
             </Link>
@@ -246,12 +246,12 @@ const Features = () => {
                 key={product.id}
                 className="group cursor-pointer hover:-translate-y-2 transition-transform duration-300"
               >
-                <div className="relative bg-gray-100 rounded-2xl overflow-hidden aspect-3/4">
-                  <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-xs font-bold px-2.5 py-1 rounded-full">
+                <div className="relative bg-gray-100 rounded-2xl overflow-hidden aspect-3/4 shadow-md">
+                  <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
                     {product.badge}
                   </div>
                   {product.originalPrice && (
-                    <div className="absolute top-3 right-3 z-10 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">
+                    <div className="absolute top-3 right-3 z-10 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
                       -
                       {Math.round(
                         (1 -
@@ -281,7 +281,9 @@ const Features = () => {
                   <p className="text-sm text-gray-500 font-mono">
                     {product.brand}
                   </p>
-                  <h4 className="font-semibold text-lg">{product.name}</h4>
+                  <h4 className="font-semibold text-lg font-serif">
+                    {product.name}
+                  </h4>
                   <div className="flex items-center gap-2 mt-1">
                     <StarRating rating={product.rating} />
                     <span className="text-xs text-gray-400">
@@ -302,10 +304,10 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Testimonials Section – improved card spacing */}
+        {/* Testimonials Section – improved card design */}
         <div className="mb-32">
           <div className="text-center mb-14">
-            <span className="text-sm font-mono uppercase tracking-wider text-gray-400">
+            <span className="text-sm font-mono uppercase tracking-wider text-gray-500">
               Real stories
             </span>
             <h3 className="text-3xl md:text-4xl font-serif font-bold mt-2">
@@ -316,10 +318,10 @@ const Features = () => {
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
-                className="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition duration-300 hover:-translate-y-1"
+                className="bg-gray-50 rounded-2xl p-6 hover:shadow-xl transition duration-300 hover:-translate-y-1 border border-gray-100"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
+                  <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden ring-2 ring-white">
                     <img
                       src={testimonial.avatar}
                       alt={testimonial.name}
@@ -332,7 +334,7 @@ const Features = () => {
                   </div>
                 </div>
                 <StarRating rating={testimonial.rating} />
-                <p className="text-gray-600 text-sm mt-3 italic">
+                <p className="text-gray-600 text-sm mt-3 italic leading-relaxed">
                   "{testimonial.text}"
                 </p>
               </div>
@@ -340,10 +342,20 @@ const Features = () => {
           </div>
         </div>
 
-        {/* Sustainability Commitment – with better visual hierarchy */}
-        <div className="bg-gray-50 rounded-3xl p-8 md:p-12 mb-32 flex flex-col lg:flex-row items-center justify-between gap-8">
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center shrink-0">
+        {/* Sustainability Commitment – modernized with background pattern */}
+        <div className="bg-gray-50 rounded-3xl p-8 md:p-12 mb-32 flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5 pointer-events-none">
+            <svg
+              className="w-full h-full"
+              patternUnits="userSpaceOnUse"
+              width="40"
+              height="40"
+            >
+              <circle cx="20" cy="20" r="1" fill="black" />
+            </svg>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left z-10">
+            <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center shrink-0 shadow-md">
               <HiOutlineGlobeAlt size={32} />
             </div>
             <div>
@@ -354,8 +366,8 @@ const Features = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center shrink-0">
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left z-10">
+            <div className="w-16 h-16 bg-black text-white rounded-full flex items-center justify-center shrink-0 shadow-md">
               <HiOutlineChartBar size={32} />
             </div>
             <div>
@@ -368,33 +380,70 @@ const Features = () => {
           </div>
           <Link
             href="/impact"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition text-sm font-medium shrink-0"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition text-sm font-medium shadow-md hover:shadow-lg z-10"
           >
             See our impact →
           </Link>
         </div>
 
-        {/* Newsletter CTA – enhanced input group styling */}
-        <div className="bg-linear-to-r from-gray-900 to-gray-800 text-white rounded-3xl p-8 md:p-12 text-center">
-          <HiOutlineSparkles size={40} className="mx-auto mb-4 text-gray-300" />
-          <h3 className="text-2xl md:text-3xl font-serif font-bold mb-2">
-            Join 15,000+ style insiders
+        {/* Newsletter CTA – vibrant and engaging */}
+        <div className="relative bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white rounded-3xl p-8 md:p-12 text-center overflow-hidden">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 -left-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-3xl" />
+            <div className="absolute bottom-0 -right-20 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-3xl" />
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
+
+          <div className="relative inline-flex mb-4">
+            <div className="absolute inset-0 bg-white/20 rounded-full blur-xl scale-150" />
+            <HiOutlineSparkles
+              size={48}
+              className="relative text-white drop-shadow-lg"
+            />
+          </div>
+
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-3 tracking-tight">
+            Join 15,000+{" "}
+            <span className="bg-linear-to-r from-gray-100 to-gray-300 bg-clip-text text-transparent">
+              style insiders
+            </span>
           </h3>
-          <p className="text-gray-300 max-w-lg mx-auto mb-8">
+          <p className="text-gray-200 text-base md:text-lg max-w-lg mx-auto mb-8 leading-relaxed">
             Be the first to know about exclusive drops, members-only pricing,
-            and get <span className="font-bold">10% off your first order</span>.
+            and get{" "}
+            <span className="font-bold text-white border-b border-white/30">
+              10% off your first order
+            </span>
+            .
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
             <input
               type="email"
               placeholder="Your email address"
-              className="px-5 py-3 rounded-full text-black w-full focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+              className="px-6 py-3.5 rounded-full text-black w-full focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200 shadow-lg bg-white/95 hover:bg-white placeholder-gray-400"
             />
-            <button className="bg-white text-black font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-md whitespace-nowrap">
-              Claim 10% off →
+            <button className="group bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap flex items-center justify-center gap-2">
+              Claim 10% off
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
             </button>
           </div>
-          <p className="text-xs text-gray-400 mt-6">
+
+          <p className="text-xs text-gray-300 mt-6 flex items-center justify-center gap-1.5">
+            <span className="inline-block w-1 h-1 rounded-full bg-green-400" />
             No spam, unsubscribe anytime. We respect your privacy.
           </p>
         </div>
