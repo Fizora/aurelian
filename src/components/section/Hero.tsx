@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-// Type definition for slide data
 interface Slide {
   id: number;
   image: string;
@@ -13,66 +12,62 @@ interface Slide {
   badge?: string;
 }
 
-// Data object untuk slide - bisa diisi dengan produk terbaru atau event kolaborasi
 const slidesData: Slide[] = [
   {
     id: 1,
     image:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    title: "Summer Collection 2025",
+      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    title: "Fall/Winter Capsule",
     description:
-      "Discover the latest trends in sustainable fashion. Limited edition pieces crafted for the modern explorer.",
+      "Discover the new collection — refined minimalism for the urban nomad. Limited pieces available.",
     ctaText: "Shop Now",
-    ctaLink: "/products",
-    badge: "New Arrivals",
+    ctaLink: "/collections/fall-winter",
+    badge: "New Arrival",
   },
   {
     id: 2,
     image:
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    title: "Rocco x Studio Kura",
+      "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80",
+    title: "VELORA x STUDIO KURA",
     description:
-      "Exclusive collaboration celebrating artisanal craftsmanship. Limited quantities available.",
-    ctaText: "Explore Collaboration",
+      "An exclusive collaboration celebrating artisanal craftsmanship. Each piece is numbered.",
+    ctaText: "Explore Collab",
     ctaLink: "/collaboration",
     badge: "Limited Edition",
   },
   {
     id: 3,
     image:
-      "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
-    title: "Tech Meets Style",
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    title: "Tech-Forward Streetwear",
     description:
-      "Innovative fabrics with smart features. Pre-order now for early access to our most advanced collection.",
-    ctaText: "Learn More",
+      "Innovative fabrics with smart features. Pre-order now for early access.",
+    ctaText: "Pre-Order",
     ctaLink: "/tech-collection",
     badge: "Pre-Order Now",
   },
 ];
 
 export default function Hero() {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Fungsi untuk pindah ke slide berikutnya
   const nextSlide = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % slidesData.length);
+    setCurrentIndex((prev) => (prev + 1) % slidesData.length);
     setTimeout(() => setIsTransitioning(false), 500);
   }, [isTransitioning]);
 
-  // Fungsi untuk pindah ke slide sebelumnya
   const prevSlide = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + slidesData.length) % slidesData.length,
+      (prev) => (prev - 1 + slidesData.length) % slidesData.length,
     );
     setTimeout(() => setIsTransitioning(false), 500);
   }, [isTransitioning]);
 
-  // Fungsi untuk langsung menuju slide tertentu
   const goToSlide = (index: number) => {
     if (isTransitioning || index === currentIndex) return;
     setIsTransitioning(true);
@@ -80,22 +75,15 @@ export default function Hero() {
     setTimeout(() => setIsTransitioning(false), 500);
   };
 
-  // Auto-slide setiap 5 detik
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") {
-        prevSlide();
-      } else if (e.key === "ArrowRight") {
-        nextSlide();
-      }
+      if (e.key === "ArrowLeft") prevSlide();
+      else if (e.key === "ArrowRight") nextSlide();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
@@ -103,46 +91,34 @@ export default function Hero() {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Slider Container - Horizontal sliding */}
       <div
         className="flex transition-transform duration-500 ease-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {slidesData.map((slide) => (
-          <div
-            key={slide.id}
-            className="relative w-full shrink-0  min-h-screen"
-          >
-            {/* Gambar Background dengan object-cover untuk konsistensi */}
+          <div key={slide.id} className="relative w-full shrink-0 min-h-screen">
             <div className="absolute inset-0">
               <img
                 src={slide.image}
                 alt={slide.title}
                 className="w-full h-full object-cover"
               />
-              {/* Overlay gelap untuk readability teks */}
               <div className="absolute inset-0 bg-black/30" />
             </div>
-
-            {/* Konten Teks dengan container mx-auto */}
             <div className="relative z-10 min-h-screen flex items-center">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="max-w-2xl">
-                  {/* Badge */}
                   {slide.badge && (
                     <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-sm font-semibold px-3 py-1 rounded-full mb-4">
                       {slide.badge}
                     </span>
                   )}
-                  {/* Title */}
                   <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-4 font-mono tracking-tight">
                     {slide.title}
                   </h1>
-                  {/* Description */}
                   <p className="text-base sm:text-lg text-gray-100 mb-8 max-w-lg">
                     {slide.description}
                   </p>
-                  {/* CTA Button */}
                   <a
                     href={slide.ctaLink}
                     className="inline-flex items-center px-6 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 shadow-lg"
@@ -169,10 +145,9 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Tombol Navigasi Previous */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/30 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/30 transition-all focus:outline-none focus:ring-2 focus:ring-white"
         aria-label="Previous slide"
       >
         <svg
@@ -189,11 +164,9 @@ export default function Hero() {
           />
         </svg>
       </button>
-
-      {/* Tombol Navigasi Next */}
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/30 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md text-white p-2 rounded-full hover:bg-white/30 transition-all focus:outline-none focus:ring-2 focus:ring-white"
         aria-label="Next slide"
       >
         <svg
@@ -211,7 +184,6 @@ export default function Hero() {
         </svg>
       </button>
 
-      {/* Indikator Dots */}
       <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-2">
         {slidesData.map((_, index) => (
           <button
@@ -227,7 +199,6 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Optional: Indikator Slide Number */}
       <div className="absolute bottom-8 right-8 z-20 bg-black/50 backdrop-blur-sm text-white text-sm px-3 py-1 rounded-full">
         {currentIndex + 1} / {slidesData.length}
       </div>

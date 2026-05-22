@@ -4,18 +4,28 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoBag } from "react-icons/io5";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { IoBagOutline } from "react-icons/io5";
 import { LuMenu, LuX, LuSearch } from "react-icons/lu";
 
+interface SearchProduct {
+  id: number;
+  name: string;
+  brand: string;
+  price: string;
+  image: string;
+  badge?: string;
+}
+
+// Placeholder gambar dummy (base64 SVG) - tidak perlu file eksternal
+const DUMMY_IMAGE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239ca3af' font-size='16'%3ENo Image%3C/text%3E%3C/svg%3E";
+
 const Navbar = () => {
-  // State for mobile menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [circleExpanded, setCircleExpanded] = useState(false);
   const [circlePos, setCirclePos] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // State for search overlay
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchCircleExpanded, setSearchCircleExpanded] = useState(false);
   const [searchCirclePos, setSearchCirclePos] = useState({ top: 0, left: 0 });
@@ -31,52 +41,46 @@ const Navbar = () => {
     { name: "Contact", href: "/contact" },
   ];
 
-  // Popular search terms (from image)
   const popularTerms = [
-    "airmax",
-    "structureplus",
-    "p-6000",
-    "nike tn",
-    "jordan",
-    "airforce1",
-    "airjordan1low",
-    "vomero5",
+    "oversized tee",
+    "cargo pants",
+    "denim jacket",
+    "sneakers",
+    "hoodie",
+    "bucket hat",
   ];
+  const genderOptions = ["Men", "Women", "Unisex"];
+  const priceRange = "Rp500.000 - Rp1.500.000";
+  const colorOptions = ["Black", "White", "Gray", "Beige", "Olive"];
 
-  // Filter options
-  const genderOptions = ["Men", "Women", "Kids", "Boys", "Girls"];
-  const priceRange = "Rp1.500.001 - Rp2.999.999";
-  const colorOptions = ["Purple", "Black", "White", "Red", "Blue"];
-
-  // Just In products (based on image)
-  const justInProducts = [
+  // Gunakan DUMMY_IMAGE untuk semua produk
+  const trendingProducts: SearchProduct[] = [
     {
       id: 1,
-      name: "Nike Pegasus 42",
-      color: "Purple",
-      category: "Men's Road Running Shoes",
-      price: "Rp2.199.000",
-      image: "/api/placeholder/200/200",
+      name: "Oversized Drop Shoulder Tee",
+      brand: "VELORA",
+      price: "Rp499.000",
+      image: DUMMY_IMAGE,
+      badge: "Best Seller",
     },
     {
       id: 2,
-      name: "Nike Pegasus 42",
-      color: "Black",
-      category: "Women's Road Running Shoes",
-      price: "Rp2.199.000",
-      image: "/api/placeholder/200/200",
+      name: "Technical Cargo Pants",
+      brand: "VELORA",
+      price: "Rp899.000",
+      image: DUMMY_IMAGE,
+      badge: "New",
     },
     {
       id: 3,
-      name: "Nike Pegasus 42",
-      color: "White",
-      category: "Women's Road Running Shoes (Wide)",
-      price: "Rp2.199.000",
-      image: "/api/placeholder/200/200",
+      name: "Cropped Knit Sweater",
+      brand: "VELORA",
+      price: "Rp699.000",
+      image: DUMMY_IMAGE,
+      badge: "Limited",
     },
   ];
 
-  // Mobile menu handlers
   const handleMenuToggle = () => {
     if (isSearchOpen) handleSearchClose();
     if (!isMenuOpen) {
@@ -95,7 +99,6 @@ const Navbar = () => {
     }
   };
 
-  // Search overlay handlers
   const handleSearchOpen = () => {
     if (isMenuOpen) handleMenuToggle();
     const rect = searchInputRef.current?.getBoundingClientRect();
@@ -115,7 +118,6 @@ const Navbar = () => {
     setSearchQuery("");
   };
 
-  // Lock scroll when any overlay is open
   useEffect(() => {
     if (isMenuOpen || isSearchOpen) {
       document.body.style.overflow = "hidden";
@@ -127,7 +129,6 @@ const Navbar = () => {
     };
   }, [isMenuOpen, isSearchOpen]);
 
-  // ESC to close
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -139,7 +140,6 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [isMenuOpen, isSearchOpen]);
 
-  // Focus on overlay input when circle expands
   useEffect(() => {
     if (searchCircleExpanded && searchOverlayInputRef.current) {
       searchOverlayInputRef.current.focus();
@@ -148,35 +148,30 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="w-full fixed left-0 top-0 z-50 bg-white text-black shadow-sm">
+      <header className="w-full fixed left-0 top-0 z-50 bg-white/90 backdrop-blur-md text-black shadow-sm">
         <div className="mx-auto container flex items-center justify-between p-4">
-          {/* Logo */}
-          <div className="font-mono text-2xl font-black">
-            <Link href="/">Aurelian.</Link>
+          <div className="font-mono text-2xl font-black tracking-tighter">
+            <Link href="/">VELORA.</Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
-            <Link href="/" className="hover:text-black transition">
-              Home
-            </Link>
-            <Link href="/shop" className="hover:text-black transition">
-              Shop
-            </Link>
-            <Link href="/collections" className="hover:text-black transition">
-              Collections
-            </Link>
-            <Link href="/about" className="hover:text-black transition">
-              About
-            </Link>
-            <Link href="/contact" className="hover:text-black transition">
-              Contact
-            </Link>
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="hover:text-black transition"
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
 
-          {/* Search, Icon & Auth */}
           <div className="flex items-center gap-5 text-gray-600">
             <div className="relative">
+              <LuSearch
+                className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400"
+                size={18}
+              />
               <input
                 ref={searchInputRef}
                 type="text"
@@ -184,20 +179,20 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={handleSearchOpen}
-                className="bg-transparent border-b border-gray-300 focus:outline-none focus:border-black w-32 sm:w-40"
+                className="pl-8 pr-3 py-1 bg-transparent border-b border-gray-300 focus:outline-none focus:border-black w-32 sm:w-40 text-sm"
               />
             </div>
+
             <Link href="/cart" className="hover:text-black transition">
-              <IoBag size={24} />
+              <IoBagOutline size={24} />
             </Link>
             <Link
               href="/signin"
-              className="hidden sm:block bg-gray-800 text-white px-5 py-2 rounded-full hover:bg-gray-900 transition text-sm"
+              className="hidden sm:block bg-black text-white px-5 py-2 rounded-full hover:bg-gray-800 transition text-sm"
             >
               Sign In
             </Link>
 
-            {/* Mobile Menu Button */}
             <button
               ref={buttonRef}
               onClick={handleMenuToggle}
@@ -307,7 +302,6 @@ const Navbar = () => {
       <AnimatePresence>
         {isSearchOpen && (
           <div className="fixed inset-0 z-50">
-            {/* Expanding white circle from search input */}
             <div
               className="absolute bg-white rounded-full transition-transform duration-700 ease-out"
               style={{
@@ -319,8 +313,6 @@ const Navbar = () => {
                 transformOrigin: "center center",
               }}
             />
-
-            {/* Search Overlay Content */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: searchCircleExpanded ? 1 : 0 }}
@@ -328,7 +320,6 @@ const Navbar = () => {
               className="relative z-50 w-full h-full bg-white overflow-auto"
             >
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                {/* Search Header with Input and Close Button */}
                 <div className="flex items-center gap-4 mb-8 pt-4">
                   <div className="flex-1 relative">
                     <LuSearch
@@ -340,7 +331,7 @@ const Navbar = () => {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search for products, brands and more..."
+                      placeholder="Search for products, collections..."
                       className="w-full pl-10 pr-4 py-3 text-lg border-b-2 border-gray-200 focus:border-black outline-none transition-colors"
                       autoFocus
                     />
@@ -348,17 +339,13 @@ const Navbar = () => {
                   <button
                     onClick={handleSearchClose}
                     className="p-2 hover:bg-gray-100 rounded-full transition"
-                    aria-label="Close search"
                   >
                     <LuX size={24} />
                   </button>
                 </div>
 
-                {/* Search Results / Suggestions */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
-                  {/* Left Column - Popular Searches & Filters */}
                   <div className="lg:col-span-4 space-y-8">
-                    {/* Popular Search Terms */}
                     <div>
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                         Popular Search Terms
@@ -375,8 +362,6 @@ const Navbar = () => {
                         ))}
                       </div>
                     </div>
-
-                    {/* Gender Filter */}
                     <div>
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                         Gender
@@ -392,8 +377,6 @@ const Navbar = () => {
                         ))}
                       </div>
                     </div>
-
-                    {/* Shop By Price */}
                     <div>
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
                         Shop By Price
@@ -402,11 +385,9 @@ const Navbar = () => {
                         {priceRange}
                       </button>
                     </div>
-
-                    {/* Colour */}
                     <div>
                       <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                        Colour
+                        Color
                       </h3>
                       <div className="flex flex-wrap gap-3">
                         {colorOptions.map((color) => (
@@ -421,45 +402,41 @@ const Navbar = () => {
                     </div>
                   </div>
 
-                  {/* Right Column - Just In Products */}
                   <div className="lg:col-span-8">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-2xl font-bold">Just In</h2>
-                      <span className="text-sm text-gray-500">
-                        Brand: Sports
-                      </span>
+                      <h2 className="text-2xl font-bold">Trending Now</h2>
+                      <span className="text-sm text-gray-500">Just In</span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {justInProducts.map((product) => (
+                      {trendingProducts.map((product) => (
                         <div
                           key={product.id}
                           className="group cursor-pointer"
-                          onClick={() => {
-                            // Handle product selection
-                            handleSearchClose();
-                          }}
+                          onClick={handleSearchClose}
                         >
-                          <div className="bg-gray-100 rounded-lg overflow-hidden mb-3">
+                          <div className="bg-gray-100 rounded-lg overflow-hidden mb-3 relative aspect-square">
                             <Image
                               src={product.image}
                               alt={product.name}
-                              width={200}
-                              height={200}
-                              className="w-full h-auto object-cover group-hover:scale-105 transition duration-300"
+                              fill
+                              className="object-cover group-hover:scale-105 transition duration-300"
+                              sizes="(max-width: 768px) 100vw, 240px"
                             />
                           </div>
                           <h3 className="font-medium text-gray-900">
                             {product.name}
                           </h3>
                           <p className="text-sm text-gray-500">
-                            {product.color}
-                          </p>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {product.category}
+                            {product.brand}
                           </p>
                           <p className="font-semibold text-gray-900 mt-2">
                             {product.price}
                           </p>
+                          {product.badge && (
+                            <span className="inline-block mt-1 text-xs bg-black text-white px-2 py-0.5 rounded-full">
+                              {product.badge}
+                            </span>
+                          )}
                         </div>
                       ))}
                     </div>
